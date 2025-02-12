@@ -2,6 +2,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import axios from 'axios';
 
+const API_BASE_URL = "https://ogeiulss3e.execute-api.us-east-1.amazonaws.com"; // Replace with your actual API Gateway URL
+
 const RedLightGreenLight = ({ goBack }) => {
     const [gameState, setGameState] = useState(null);
     const [gameMessage, setGameMessage] = useState("");
@@ -35,7 +37,7 @@ const RedLightGreenLight = ({ goBack }) => {
 
     const startGame = async () => {
         try {
-            const response = await axios.post('http://localhost:3000/api/red-light-green-light/start');
+            const response = await axios.post(`${API_BASE_URL}/api/red-light-green-light/start`);
             setGameState(response.data.gameState);
             setGameMessage("Game started! Hold the button to move.");
             setProgress(0);
@@ -47,7 +49,7 @@ const RedLightGreenLight = ({ goBack }) => {
 
     const finishGame = async () => {
         try {
-            const response = await axios.post('http://localhost:3000/api/red-light-green-light/update', {
+            const response = await axios.post(`${API_BASE_URL}/api/red-light-green-light/update`, {
                 gameId: 0, // Assuming a single game for simplicity
                 action: 'move',
             });
