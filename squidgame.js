@@ -2,10 +2,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const serverless = require("serverless-http");
 
 // Initialize Express app
 const app = express();
-const PORT = process.env.PORT || 3000;
+app.use(bodyParser.json());
+app.use(cors());
 
 // Middleware
 app.use(bodyParser.json());
@@ -14,6 +16,13 @@ app.use((req, res, next) => {
     console.log(`${req.method} ${req.url}`);
     next();
 });
+
+app.get("/", (req, res) => {
+    res.json({ message: "Squid Game API is running!" });
+});
+
+// Export the app for AWS Lambda
+module.exports.handler = serverless(app);
 
 // Game Routes
 const games = {
