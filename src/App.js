@@ -2,7 +2,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import axios from 'axios';
 
-const API_BASE_URL = "https://ogeiulss3e.execute-api.us-east-1.amazonaws.com"; // Replace with your actual API Gateway URL
+const API_BASE_URL = "https://m0e0zuj7gb.execute-api.us-east-1.amazonaws.com/"; // Replace with your actual API Gateway URL
 
 const RedLightGreenLight = ({ goBack }) => {
     const [gameState, setGameState] = useState(null);
