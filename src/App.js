@@ -91,7 +91,7 @@ const RedLightGreenLight = ({ goBack }) => {
 
             {gameState && (
                 <div>
-                    <h3>Light: {isGreenLight ? 'Green Light' : 'Red Light'}</h3>
+                    <h3 style={{color: isGreenLight ? 'green' : 'red'}}>Light: {isGreenLight ? 'Green Light' : 'Red Light'}</h3>
                     <h3>Player Position: {progress}%</h3>
                     <div
                         style={{
@@ -317,7 +317,7 @@ const DalgonaChallenge = ({ goBack }) => {
     // Handle mouse up event
     const handleMouseUp = () => {
         setIsDrawing(false);
-        if (progress >= 85) {
+        if (progress >= 95) {
             alert("Congratulations! You passed");
         }
     };
@@ -377,6 +377,7 @@ const GameMenu = ({ selectGame }) => {
             <button onClick={() => selectGame('dalgonachallenge')}>Dalgona Challenge </button>
             <button disabled>Tug of War (Coming Soon)</button>
             <button disabled>Glass Bridge (Coming Soon)</button>
+            <button disabled>Mingle (Coming Soon)</button>
         </div>
     );
 };
