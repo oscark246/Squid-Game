@@ -1,8 +1,9 @@
 // Import necessary modules
 import React, { useRef, useState, useEffect } from 'react';
 import axios from 'axios';
+import './App.css';
 
-const API_BASE_URL = "https://m0e0zuj7gb.execute-api.us-east-1.amazonaws.com/"; // Replace with your actual API Gateway URL
+const API_BASE_URL = "https://m0e0zuj7gb.execute-api.us-east-1.amazonaws.com"; // Replace with your actual API Gateway URL
 
 const RedLightGreenLight = ({ goBack }) => {
     const [gameState, setGameState] = useState(null);
@@ -37,7 +38,7 @@ const RedLightGreenLight = ({ goBack }) => {
 
     const startGame = async () => {
         try {
-            const response = await axios.post(`${API_BASE_URL}/api/red-light-green-light/start`);
+            const response = await axios.post(`${API_BASE_URL}/api/red-light-green-light/start`); //https://ogeiulss3e.execute-api.us-east-1.amazonaws.com
             setGameState(response.data.gameState);
             setGameMessage("Game started! Hold the button to move.");
             setProgress(0);
@@ -128,14 +129,13 @@ const RedLightGreenLight = ({ goBack }) => {
 };
 
 
-const DalgonaChallenge = () => {
+const DalgonaChallenge = ({ goBack }) => {
     const canvasRef = useRef(null);
     const ctxRef = useRef(null);
     const [isDrawing, setIsDrawing] = useState(false);
     const [hasLost, setHasLost] = useState(false);
     const [progress, setProgress] = useState(0);
     const [selectedShape, setSelectedShape] = useState("circle");
-    const totalPathLength = useRef(0);
     const lastPosition = useRef({ x: 0, y: 0 });  // To store the previous mouse position
 
     useEffect(() => {
@@ -163,28 +163,27 @@ const DalgonaChallenge = () => {
 
     const drawShape = (shape) => {
         const ctx = ctxRef.current;
-        ctx.clearRect(0, 0, 400, 400);
-
+        ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+    
         const path = new Path2D();
         ctx.strokeStyle = "rgb(66, 10, 0)";
         ctx.lineWidth = 15;
-
+    
         if (shape === "circle") {
-            path.arc(200, 200, 100, 0, Math.PI * 2, true);
+            path.arc(185, 185, 100, 0, Math.PI * 2, true); // ✅ Centered at (185, 185)
         } else if (shape === "triangle") {
-            path.moveTo(200, 100);
-            path.lineTo(300, 300);
-            path.lineTo(100, 300);
+            path.moveTo(185, 85);  // ✅ Adjusted for center
+            path.lineTo(285, 260);
+            path.lineTo(85, 260);
             path.closePath();
         } else if (shape === "star") {
-            drawStar(path, 200, 200, 5, 100, 50);
+            drawStar(path, 185, 185, 5, 100, 50); // ✅ Centered star
         } else if (shape === "umbrella") {
-            drawUmbrella(path);
+            drawUmbrella(path); // ✅ Already centered correctly
         }
-
-        ctx.stroke(path); 
-        shapePath.current = path; 
-
+    
+        ctx.stroke(path);
+        shapePath.current = path;
         // Store the shape outline as pixel data
         const imageData = ctx.getImageData(0, 0, canvasRef.current.width, canvasRef.current.height);
         const pixels = imageData.data;
@@ -202,24 +201,24 @@ const DalgonaChallenge = () => {
     };
 
     
-    const drawStar = (ctx, cx, cy, spikes, outerRadius, innerRadius) => {
-        let rot = Math.PI / 2 * 3;
-        let x = cx;
-        let y = cy;
-        const step = Math.PI / spikes;
-        ctx.moveTo(cx, cy - outerRadius);
-        for (let i = 0; i < spikes; i++) {
-            x = cx + Math.cos(rot) * outerRadius;
-            y = cy + Math.sin(rot) * outerRadius;
-            ctx.lineTo(x, y);
-            rot += step;
-            x = cx + Math.cos(rot) * innerRadius;
-            y = cy + Math.sin(rot) * innerRadius;
-            ctx.lineTo(x, y);
-            rot += step;
-        }
-        ctx.closePath();
-    };
+    const drawStar = (path, cx, cy, spikes, outerRadius, innerRadius) => {
+    let rot = Math.PI / 2 * 3;
+    let x = cx;
+    let y = cy;
+    const step = Math.PI / spikes;
+    path.moveTo(cx, cy - outerRadius);
+    for (let i = 0; i < spikes; i++) {
+        x = cx + Math.cos(rot) * outerRadius;
+        y = cy + Math.sin(rot) * outerRadius;
+        path.lineTo(x, y);
+        rot += step;
+        x = cx + Math.cos(rot) * innerRadius;
+        y = cy + Math.sin(rot) * innerRadius;
+        path.lineTo(x, y);
+        rot += step;
+    }
+    path.closePath();
+};
 
     const drawUmbrella = (path) => {
         /* Draw umbrella parasol */
@@ -319,7 +318,7 @@ const DalgonaChallenge = () => {
     const handleMouseUp = () => {
         setIsDrawing(false);
         if (progress >= 85) {
-            alert("Congratulations! You traced the outline perfectly!");
+            alert("Congratulations! You passed");
         }
     };
 
@@ -349,6 +348,7 @@ const DalgonaChallenge = () => {
                     <button onClick={() => setSelectedShape("star")}>Star</button>
                     <button onClick={() => setSelectedShape("umbrella")}>Umbrella</button>
                 </div>
+                <button onClick={goBack}>Back to Menu</button>
             </div>
         </div>
     );
@@ -357,13 +357,26 @@ const DalgonaChallenge = () => {
 
 
 const GameMenu = ({ selectGame }) => {
+    // Create a reference to the audio element
+    const audioRef = useRef(null);
+
+    useEffect(() => {
+        // Set the volume when the component mounts
+        if (audioRef.current) {
+          audioRef.current.volume = 0.1; // Set volume to 10%
+        }
+      }, []);
+
     return (
-        <div style={{ textAlign: 'center', marginTop: '50px' }}>
-            <h1>Squid Game</h1>
+        <div>
+            <video id="mainTitle" src="\squidgamelogo.mp4" autoPlay muted className="logo-video"></video>
+            <audio id="bgMusic" ref={audioRef} src="\Way Back then.mp3" type="audio/mp3" autoPlay loop></audio>
+
             <h3>Select a Game</h3>
             <button onClick={() => selectGame('redLightGreenLight')}>Red Light, Green Light</button>
             <button onClick={() => selectGame('dalgonachallenge')}>Dalgona Challenge </button>
             <button disabled>Tug of War (Coming Soon)</button>
+            <button disabled>Glass Bridge (Coming Soon)</button>
         </div>
     );
 };
