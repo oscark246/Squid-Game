@@ -36,3 +36,120 @@
     transform: rotate(360deg);
   }
 }
+
+@font-face {
+  font-family: 'Game of Squids';
+  src: url('/public/GameOfSquids.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* General Styles */
+body {
+  background-color: #090b08;
+  color: #fff;
+  font-family: 'Game of Squids', sans-serif;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  display: flex;
+  justify-content: center;  /* Center horizontally */
+  align-items: center;
+}
+
+/* Squid Game Logo Styling */
+.logo-video {
+  width: 500px;  /* Adjust size as needed */
+  height: auto;
+  margin-bottom: 20px;
+}
+
+/* Header */
+header {
+  background: linear-gradient(90deg, #ed1b76, #f44786);
+  padding: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-family: 'Game of Squids', sans-serif;
+}
+
+/* Buttons */
+button {
+  background-color: #ed1b76;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-family: 'Game of Squids', sans-serif;
+}
+
+button:hover {
+  background-color: #f44786;
+  transform: scale(1.1);
+}
+
+/* Game Container */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+/* Shapes (Triangle, Circle, Square) */
+.shape-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.shape {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  color: #ed1b76;
+  border: 4px solid #ed1b76;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+.shape:hover {
+  background-color: #ed1b76;
+  color: black;
+}
+
+/* Footer */
+footer {
+  margin-top: 50px;
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+canvas {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 50%;
+  border: 2px solid var(--color-green);
+  box-shadow: 0 0 4px 4px #060c15; 
+  width: 370px;
+  height: 370px;
+  background-color: #c1b36c;
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#c4b56f+0,c1a94f+62,6b4c14+90,c1a94f+93,956b1b+94,956b1b+100 */
+  background: #c4b56f; /* Old browsers */
+  background: -moz-radial-gradient(center, ellipse cover,  #c4b56f 0%, #c1a94f 62%, #6b4c14 90%, #c1a94f 93%, #956b1b 94%, #956b1b 100%); /* FF3.6-15 */
+  background: -webkit-radial-gradient(center, ellipse cover,  #c4b56f 0%,#c1a94f 62%,#6b4c14 90%,#c1a94f 93%,#956b1b 94%,#956b1b 100%); /* Chrome10-25,Safari5.1-6 */
+  background: radial-gradient(ellipse at center,  #c4b56f 0%,#c1a94f 62%,#6b4c14 90%,#c1a94f 93%,#956b1b 94%,#956b1b 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c4b56f', endColorstr='#956b1b',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
