@@ -374,7 +374,7 @@ const GameMenu = ({ selectGame }) => {
 
             <h3>Select a Game</h3>
             <button onClick={() => selectGame('redLightGreenLight')}>Red Light, Green Light</button>
-            <button onClick={() => selectGame('dalgonachallenge')}>Dalgona Challenge </button>
+            <button onClick={() => selectGame('dalgonachallenge')}>Dalgona</button>
             <button disabled>Tug of War (Coming Soon)</button>
             <button disabled>Glass Bridge (Coming Soon)</button>
             <button disabled>Mingle (Coming Soon)</button>
